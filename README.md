@@ -13,7 +13,7 @@ Answer questions about JavaScript and win fabulous prizes! (The prize is knowled
 
 
 ## TODO
-- [ ] Display a Start button, Current High Scores Button
+- [x] Display a Start button, Current High Scores Button
 - [ ] When Start is pressed, start the quiz
     - [ ] Make a set of Q/A objects (Question, Option1, Option2, Option3, Option4, CorrectOptionNumber)
     - [ ] Start a timer, display its current time.

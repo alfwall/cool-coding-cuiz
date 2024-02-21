@@ -7,22 +7,45 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="./assets/css/reset.css" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <title>????????????</title>
+  <title>Alfred's Cool Coding Cuiz</title>
 </head>
 
 <body>
-  <header>
-    <h1>hhhhhh horses hhhhh</h1>
-  </header>
-  
   <main>
-    <h2>hhHHHHHHHHHHHHHHHH</h2>
+    
+    <div id="title-screen">
+      <div id="center-text-bubble">Cool Coding Cuiz</div>
+      <button id="start-quiz-button" onClick="StartQuiz()">Start</button>
+      <button id="high-scores-button" onClick="GoToHighScores()">High Scores</button>
+    </div>
+
+
+    <div id="question-screen" hidden>
+      <div id="question-header">
+        <button id="stop-quiz-button" onClick="GoToTitle()">STOP</button>
+        <div id="time-left">TIME: -1</div>
+      </div>
+      <div id="question-bubble">QUESTION: UH OHHHH</div>
+      <div id="all-answer-options">
+        <button class="answer-option">Option #1</button>
+        <button class="answer-option">Option #2</button>
+        <button class="answer-option">Option #3</button>
+        <button class="answer-option">Option #4</button>
+      </div>
+    </div>
+
+    <div id="high-scores-screen" hidden>
+      <div id="high-scores-header">
+        <button id="title-screen-button" onClick="GoToTitle()">TITLE</button>
+      </div>
+      <div id="high-scores-title">HIGH SCORES</div>
+      <ol id="top-scores">
+        <li class="score">DUMMY SCORE: 5</li>
+      </ol>
+    </div>
+
   </main>
-  
-  <footer>
-    <h3>bees</h3>
-  </footer>
-  
+
   <script src="./assets/js/script.js"></script>
 </body>
 
