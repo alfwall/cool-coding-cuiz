@@ -14,33 +14,33 @@
   <main>
     
     <div id="title-screen">
-      <div id="center-text-bubble">Cool Coding Cuiz</div>
-      <button id="start-quiz-button" onClick="StartQuiz()">Start</button>
-      <button id="high-scores-button" onClick="GoToHighScores()">High Scores</button>
+      <div id="center-text-bubble" class="white-bubble">Cool Coding Cuiz</div>
+      <button id="start-quiz-button" class="white-bubble" onClick="StartQuiz()">Start</button>
+      <button id="high-scores-button" class="white-bubble" onClick="GoToHighScores()">High Scores</button>
     </div>
 
 
     <div id="question-screen" hidden>
       <div id="question-header">
-        <button id="stop-quiz-button" onClick="GoToTitle()">STOP</button>
-        <div id="time-left">TIME: -1</div>
+        <button id="stop-quiz-button" class="white-bubble"onClick="GoToTitle()">STOP</button>
+        <div id="time-left" class="white-bubble">TIME: -1</div>
       </div>
-      <div id="question-bubble">QUESTION: UH OHHHH</div>
+      <div id="question-bubble" class="white-bubble">QUESTION: UH OHHHH</div>
       <div id="all-answer-options">
-        <button class="answer-option">Option #1</button>
-        <button class="answer-option">Option #2</button>
-        <button class="answer-option">Option #3</button>
-        <button class="answer-option">Option #4</button>
+        <button class="white-bubble answer-option">Option #1</button>
+        <button class="white-bubble answer-option">Option #2</button>
+        <button class="white-bubble answer-option">Option #3</button>
+        <button class="white-bubble answer-option">Option #4</button>
       </div>
     </div>
 
     <div id="high-scores-screen" hidden>
       <div id="high-scores-header">
-        <button id="title-screen-button" onClick="GoToTitle()">TITLE</button>
+        <button id="title-screen-button" class="white-bubble" onClick="GoToTitle()">TITLE</button>
       </div>
-      <div id="high-scores-title">HIGH SCORES</div>
-      <ol id="top-scores">
-        <li class="score">DUMMY SCORE: 5</li>
+      <div id="high-scores-title" class="white-bubble">HIGH SCORES</div>
+      <ol id="top-scores" class="white-bubble">
+        <li class="white-bubble score">DUMMY SCORE: 5</li>
       </ol>
     </div>
 
