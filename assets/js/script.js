@@ -8,20 +8,22 @@ function IsHidden(element) {
 }
 
 function Hide(element) {
-    element.setAttribute("hidden", "hidden");
+    element.classList.add("hidden");
 }
 
 function UnHide(element) {
-    element.removeAttribute("hidden");
+    element.classList.remove("hidden");
 }
 
 function GoToTitle() {
+    console.log("GO TO TITLE!");
     Hide(quizScreenElem);
     Hide(scoresScreenElem);
     UnHide(titleScreenElem);
 }
 
 function StartQuiz() {
+    console.log("START THE QUIZ!");
     Hide(titleScreenElem);
     Hide(scoresScreenElem);
     UnHide(quizScreenElem);
@@ -29,6 +31,7 @@ function StartQuiz() {
 }
 
 function GoToHighScores() {
+    console.log("CHECKING HIGH SCORES!");
     Hide(quizScreenElem);
     Hide(titleScreenElem);
     UnHide(scoresScreenElem);

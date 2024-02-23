@@ -3,29 +3,74 @@
     --nice-blue: #53a6ff;
 }
 
-/* White backgrounds hurt my eyes. Default to black bg, white font. */
 * {
-    background-color: black;
-    color: white;
-
-    text-align: center;
     font-family: "Open Sans", sans-serif;
     font-size: 36px;
     font-weight: bold;
-
-    padding: 20px 20px 20px 20px;
-    margin: 20px 20px 20px 20px;
 }
 
-/*  */
-.white-bubble {
-    display: inline-block;
+/* Class to add/remove that hides stuff. */
+div.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+/* All labels and buttons should show up in rounded bubbles. */
+.bubble {
+    border-radius: 25px;
+    margin: 20px;
+    text-align: center;
+}
+
+.white-on-black {
     background-color: #FFFFFF;
     color: #000000;
-    border-radius: 25px;
+}
+
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 
+
+
+/* White backgrounds hurt my eyes. Default to black bg, white font. */
+body {
+    background-color: black;
+    color: white;
+    height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+/* START SCREEN, vertically displays title, start button, high score button. */
+#title-screen {
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+
+}
+
+/* Title should be wider than buttons. */
+#center-text-bubble {
+    font-size: 56px;
+    font-weight: bolder;
+    width: 80%;
+}
+
+.title-screen-button {
+    width: 50%;
+}
 
 
 
@@ -35,10 +80,14 @@
     float: left;
 }
 
-#try-again-button {
-    float: left;
-}
-
 #time-left {
     float: right;
+}
+
+
+
+
+
+#try-again-button {
+    float: left;
 }
