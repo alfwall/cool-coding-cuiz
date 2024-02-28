@@ -16,7 +16,7 @@
     <div id="title-screen">
       <div class="flex-vertical">
         <div id="center-text-bubble" class="bubble black-on-white">Cool Coding Cuiz</div>
-        <button class="bubble black-on-white title-screen-button" onClick="StartQuiz()">Start</button>
+        <button class="bubble black-on-white title-screen-button" onClick="GoToQuiz()">Start</button>
         <button class="bubble black-on-white title-screen-button" onClick="GoToHighScores()">High Scores</button>
       </div>
     </div>
@@ -24,8 +24,8 @@
 
     <div id="question-screen" class="flex-vertical hidden">
       <div id="question-header">
-        <button id="stop-quiz-button" class="bubble black-on-white"onClick="GoToTitle()">STOP</button>
-        <div id="time-left" class="bubble black-on-white">TIME: -1</div>
+        <button id="stop-quiz-button" class="bubble black-on-white" onClick="EndTheQuiz()">STOP</button>
+        <div id="time-left" class="bubble black-on-white">TIME: <span id="time-left-current">-1</span></div>
       </div>
       <div id="question-bubble" class="bubble black-on-white">QUESTION: UH OHHHH</div>
       <div id="all-answer-options">
