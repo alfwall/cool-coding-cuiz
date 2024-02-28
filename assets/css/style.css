@@ -1,6 +1,6 @@
 /* Custom color variable */
 :root {
-    --nice-blue: #53a6ff;
+    --nice-blue: #005bbd;
 }
 
 * {
@@ -14,27 +14,28 @@ div.hidden {
     display: none;
     visibility: hidden;
 }
-
 /* All labels and buttons should show up in rounded bubbles. */
 .bubble {
     border-radius: 25px;
     margin: 20px;
     text-align: center;
 }
-
-.white-on-black {
-    background-color: #FFFFFF;
-    color: #000000;
+/* Black text on White background */
+.black-on-white {
+    background-color: white;
+    color: black;
 }
-
+.black-on-blue {
+    background-color: var(--nice-blue);
+    color: white;
+}
+/* Quick vertical flexbox settings */
 .flex-vertical {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-
-
 
 
 /* White backgrounds hurt my eyes. Default to black bg, white font. */
@@ -46,13 +47,6 @@ body {
 
 
 
-
-
-
-
-
-
-
 /* START SCREEN, vertically displays title, start button, high score button. */
 #title-screen {
     text-align: center;
@@ -60,30 +54,45 @@ body {
     width: 100%;
 
 }
-
 /* Title should be wider than buttons. */
 #center-text-bubble {
     font-size: 56px;
     font-weight: bolder;
     width: 80%;
 }
-
+/* Buttons beneath the title bubble should be a lil less wide than it. */
 .title-screen-button {
     width: 50%;
 }
 
 
+/* */
+#question-screen{
 
-
+}
+/* Header contains two buttons on far left and far right sides */
+#question-header{
+    display: inline-block;
+    width: 100%;
+}
 /*  */
 #stop-quiz-button {
     float: left;
+    padding: 10px;
 }
 
 #time-left {
     float: right;
+    padding: 10px;
 }
-
+#question-bubble {
+    width: 75%;
+    height: 75%;
+    text-align: center;
+}
+.answer-option {
+    width: 45%;
+}
 
 
 
