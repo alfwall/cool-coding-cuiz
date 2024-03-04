@@ -1,61 +1,56 @@
-var titleScreenElem = document.getElementById("title-screen");
+let titleScreenElem = document.getElementById("title-screen");
 
+let quizScreenElem = document.getElementById("question-screen");
+let timeLeftElem = document.getElementById("time-left");
+let timeLeftCurrent = document.getElementById("time-left-current");
+let questionElem = document.getElementById("question-bubble");
+let allAnswerElems = document.getElementById("all-answer-options");
 
-var quizScreenElem = document.getElementById("question-screen");
-var timeLeftElem = document.getElementById("time-left");
-var timeLeftCurrent = document.getElementById("time-left-current");
-let quizLoop; // Reserves variable name for the timed quiz loop
+let quizTimerLoop; // Reserves variable name for the timed quiz loop
 
-var scoresScreenElem = document.getElementById("high-scores-screen");
+let scoresScreenElem = document.getElementById("high-scores-screen");
 
 // TODO: DELETE THIS COMMENT, just keep it around till there's a getItem somewhere.
 //  localStorage.setItem("studentGrade", JSON.stringify(studentGrade));
-var highScores = JSON.parse(localStorage.getItem("highScores"));
-var isQuizRunning = false;
-var timeLeft = 0.0;
-var currentScore = 0;
-var newScore = 0;
-var playerName = "";
+let highScores = JSON.parse(localStorage.getItem("highScores"));
+let isQuizRunning = false;
+let timeLeft = 0.0;
+let currentScore = 0;
+let newScore = 0;
+let playerName = "";
+let shuffledQAs; // Current shuffled array of the QA's
 
 // TODO: move this to a JSON object somewhere else
-var questionsAndAnswers = {
-    "question1": {
+const questionsAndAnswers = [
+    {
         "question": "1111111111",
         "answer": "YEAH",
-        "fakes": {
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
-        }
+        "fake1": "NAH1",
+        "fake2": "NAH2",
+        "fake3": "NAH3"
     },
-    "question2": {
+    {
         "question": "22222222",
         "answer": "YEAH",
-        "fakes": {
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
-        }
+        "fake1": "NAH1",
+        "fake2": "NAH2",
+        "fake3": "NAH3"
     },
-    "question3": {
+    {
         "question": "333333333",
         "answer": "YEAH",
-        "fakes": {
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
-        }
+        "fake1": "NAH1",
+        "fake2": "NAH2",
+        "fake3": "NAH3"
     },
-    "question4": {
+    {
         "question": "444444444444",
         "answer": "YEAH",
-        "fakes": {
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
-        }
-    },
-};
+        "fake1": "NAH1",
+        "fake2": "NAH2",
+        "fake3": "NAH3"
+    }
+];
 
 
 /* -------------- */
@@ -107,6 +102,21 @@ function GoToHighScores() {
 /* -------------- */
 /*    THE QUIZ    */
 /* -------------- */
+// Algorithm that shuffles an array in O(n) time by back-filling from random positions.
+function FisherYatesShuffle(array) {
+    var m = array.length, t, i;
+    // While there remain elements to shuffle…
+    while (m) {
+        // Pick a remaining element…
+        i = Math.floor(Math.random() * m--);
+        // And swap it with the current element.
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+    return array;
+}
+// Method that stops the quiz, called either by time <= 0 or running out of questions
 function EndTheQuiz() {
     console.log("Ending the quiz with these DEBUG values: ")
     console.log("  score: " + currentScore)
@@ -115,8 +125,36 @@ function EndTheQuiz() {
     newScore = currentScore;
     currentScore = 0;
     timeLeft = 0;
-    
     GoToHighScores();
+}
+function PopulateQuestionAndAnswers() {
+    var nextQA = shuffledQAs.shift()
+    if (nextQA === undefined) {
+        isQuizRunning = false;
+        return;
+    }
+    console.log("nextQA: " + nextQA)
+    questionElem.textContent = nextQA["question"];
+    allAnswerElems.innerHTML = ""; // Removes the old answer buttons
+    var newAnswerElems = [
+        "<button class='bubble black-on-blue answer-option right' onclick='SelectAnswerInQuiz(this);'>" + nextQA["answer"] + "</button>",
+        "<button class='bubble black-on-blue answer-option wrong' onclick='SelectAnswerInQuiz(this);'>" + nextQA["fake1"] + "</button>",
+        "<button class='bubble black-on-blue answer-option wrong' onclick='SelectAnswerInQuiz(this);'>" + nextQA["fake2"] + "</button>",
+        "<button class='bubble black-on-blue answer-option wrong' onclick='SelectAnswerInQuiz(this);'>" + nextQA["fake3"] + "</button>"
+    ];
+
+    newAnswerElems = FisherYatesShuffle(newAnswerElems);
+    allAnswerElems.innerHTML = newAnswerElems.join("");
+}
+function SelectAnswerInQuiz(answerElem) {
+    if (answerElem.classList.contains("right")) {
+        currentScore += 1;
+        console.log("CORRECT! Score: " + currentScore);
+    }
+    else {
+        console.log("WRONGGGGG")
+    }
+    PopulateQuestionAndAnswers();
 }
 // Activates the timer
 function StartTheQuiz() {
@@ -125,6 +163,13 @@ function StartTheQuiz() {
     currentScore = 0;
     newScore = 0;
     playerName = "";
+    
+    // Quickly shuffle the array in place
+    shuffledQAs = FisherYatesShuffle(questionsAndAnswers);
+
+    PopulateQuestionAndAnswers()
+    
+
     var quizLoop = setInterval(function () {
         timeLeft -= 0.1;
         document.getElementById("time-left-current").textContent = timeLeft.toFixed(1);

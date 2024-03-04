@@ -10,6 +10,7 @@ Answer questions about JavaScript and win fabulous prizes! (The prize is knowled
 
 ## Credits
 - [Josh Comeau's CSS reset](https://www.joshwcomeau.com/css/custom-css-reset/)
+- [The Fisher-Yates shuffle algorithm](https://bost.ocks.org/mike/shuffle/)
 
 
 ## TODO
