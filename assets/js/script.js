@@ -196,7 +196,8 @@ function RepopulateDisplayedHighScores() {
     var topScoresListElem = document.getElementById("top-scores");
     topScoresListElem.innerHTML = "";
     var newHTML = "";
-    //console.log("Current scores: " + highScores);
+    // CHECK CURRENT HIGH SCORE LIST
+    highScores = JSON.parse(localStorage.getItem("highScores"));
     if (highScores == null) {
         return;
     }
@@ -228,10 +229,13 @@ function SubmitHighScore() {
     console.log("player name: " + playerName)
     // CHECK CURRENT HIGH SCORE LIST
     highScores = JSON.parse(localStorage.getItem("highScores"));
-    // TODO: Add submitted name and score to highScores variable
+    // Add submitted name and score to highScores variable
     highScores.push({ "name": playerName, "score": newScore })
     // TODO: Sort the list by high score
-
+    function compareByScore(a, b) {
+        return b.score - a.score;
+    }
+    highScores.sort(compareByScore);
     // Update the localStorage of highScores
     localStorage.setItem("highScores", JSON.stringify(highScores));
     RepopulateDisplayedHighScores();
