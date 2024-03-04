@@ -14,21 +14,25 @@ div.hidden {
     display: none;
     visibility: hidden;
 }
+
 /* All labels and buttons should show up in rounded bubbles. */
 .bubble {
     border-radius: 25px;
     margin: 20px;
     text-align: center;
 }
+
 /* Black text on White background */
 .black-on-white {
     background-color: white;
     color: black;
 }
+
 .black-on-blue {
     background-color: var(--nice-blue);
     color: white;
 }
+
 /* Quick vertical flexbox settings */
 .flex-vertical {
     display: flex;
@@ -54,12 +58,14 @@ body {
     width: 100%;
 
 }
+
 /* Title should be wider than buttons. */
 #center-text-bubble {
     font-size: 56px;
     font-weight: bolder;
     width: 80%;
 }
+
 /* Buttons beneath the title bubble should be a lil less wide than it. */
 .title-screen-button {
     width: 50%;
@@ -67,14 +73,14 @@ body {
 
 
 /* */
-#question-screen{
+#question-screen {}
 
-}
 /* Header contains two buttons on far left and far right sides */
-#question-header{
+#question-header {
     display: inline-block;
     width: 100%;
 }
+
 /*  */
 #stop-quiz-button {
     float: left;
@@ -85,18 +91,87 @@ body {
     float: right;
     padding: 10px;
 }
+
 #question-bubble {
     width: 75%;
     height: 75%;
     text-align: center;
 }
+
 .answer-option {
     width: 45%;
 }
 
 
-
-
 #try-again-button {
     float: left;
+}
+
+#new-score-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: black;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: blue;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: blue;
+  color: white;
 }

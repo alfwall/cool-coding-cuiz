@@ -1,42 +1,10 @@
-let titleScreenElem = document.getElementById("title-screen");
 
-let quizScreenElem = document.getElementById("question-screen");
 let timeLeftElem = document.getElementById("time-left");
 let timeLeftCurrent = document.getElementById("time-left-current");
 let questionElem = document.getElementById("question-bubble");
 let allAnswerElems = document.getElementById("all-answer-options");
 
 let quizTimerLoop; // Reserves variable name for the timed quiz loop
-
-let scoresScreenElem = document.getElementById("high-scores-screen");
-
-// TODO: DELETE THIS COMMENT, just keep it around till there's a getItem somewhere.
-//  localStorage.setItem("studentGrade", JSON.stringify(studentGrade));
-let highScores = JSON.parse(localStorage.getItem("highScores"));
-let isQuizRunning = false;
-let timeLeft = 0.0;
-let currentScore = 0;
-let newScore = 0;
-let playerName = "";
-let shuffledQAs; // Current shuffled array of the QA's
-
-// TODO: move this to a JSON object somewhere else
-
-let questionsAndAnswers = [];
-fetch("./assets/js/data.json")
-    .then((res) => {
-        if (!res.ok) {
-            throw new Error
-                (`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-    })
-    .then((data) => {
-        questionsAndAnswers = data["data"];
-        console.log(questionsAndAnswers);
-    })
-    .catch((error) =>
-        console.error("Unable to fetch data:", error));
 
 
 /* -------------- */
@@ -54,16 +22,17 @@ function UnHide(element) {
 /* -------------- */
 /*   NAVIGATION   */
 /* -------------- */
+let titleScreenElem = document.getElementById("title-screen");
+let quizScreenElem = document.getElementById("question-screen");
+let scoresScreenElem = document.getElementById("high-scores-screen");
+var newScoreModal = document.getElementById("new-score-modal");
+var span = document.getElementsByClassName("close")[0];
+
 // Reveals the title screen and hides everything else
 function GoToTitle() {
     console.log("GO TO TITLE!");
-
-    // TODO: if the quiz was still running, END IT
-    if (isQuizRunning) {
-        EndTheQuiz();
-    }
-
     Hide(quizScreenElem);
+    newScoreModal.style.display = "none";
     Hide(scoresScreenElem);
     UnHide(titleScreenElem);
 }
@@ -71,16 +40,28 @@ function GoToTitle() {
 function GoToQuiz() {
     console.log("GO TO THE QUIZ!");
     Hide(titleScreenElem);
+    newScoreModal.style.display = "none";
     Hide(scoresScreenElem);
     UnHide(quizScreenElem);
     // Now start the quiz that starts the timer!
-    StartTheQuiz()
+    StartTheQuiz();
 }
 // Reveals the scoreboard and hides everything else
 function GoToHighScores() {
     console.log("CHECKING HIGH SCORES!");
     Hide(quizScreenElem);
     Hide(titleScreenElem);
+    RepopulateDisplayedHighScores();
+    newScoreModal.style.display = "none";
+    UnHide(scoresScreenElem);
+}
+// Reveals the scoreboard AND a new score modal, hiding everything else
+function NewHighScore() {
+    console.log("NEW SCORE!");
+    Hide(quizScreenElem);
+    Hide(titleScreenElem);
+    RepopulateDisplayedHighScores();
+    newScoreModal.style.display = "block";
     UnHide(scoresScreenElem);
 }
 
@@ -88,6 +69,29 @@ function GoToHighScores() {
 /* -------------- */
 /*    THE QUIZ    */
 /* -------------- */
+let isQuizRunning = false;
+console.log("isQuizRunning = false IN INITIAL 'LET'")
+let timeLeft = 0.0;
+let currentScore = 0;
+let newScore = 0;
+let playerName = "";
+let shuffledQAs; // Current shuffled array of the QA's
+let questionsAndAnswers = [];
+fetch("./assets/js/data.json")
+    .then((res) => {
+        if (!res.ok) {
+            throw new Error
+                (`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then((data) => {
+        questionsAndAnswers = data["data"];
+        //console.log(questionsAndAnswers);
+    })
+    .catch((error) =>
+        console.error("Unable to fetch data:", error));
+
 // Algorithm that shuffles an array in O(n) time by back-filling from random positions.
 function FisherYatesShuffle(array) {
     var m = array.length, t, i;
@@ -102,24 +106,14 @@ function FisherYatesShuffle(array) {
     }
     return array;
 }
-// Method that stops the quiz, called either by time <= 0 or running out of questions
-function EndTheQuiz() {
-    console.log("Ending the quiz with these DEBUG values: ")
-    console.log("  score: " + currentScore)
-    console.log("  timeLeft: " + timeLeft)
-    isQuizRunning = false;
-    newScore = currentScore;
-    currentScore = 0;
-    timeLeft = 0;
-    GoToHighScores();
-}
+// Puts new questions for answering.
 function PopulateQuestionAndAnswers() {
     var nextQA = shuffledQAs.shift()
     if (nextQA === undefined) {
+        console.log("RAN OUTTA SHUFFLED QUESTIONS!!")
         isQuizRunning = false;
         return;
     }
-    console.log("nextQA: " + nextQA)
     questionElem.textContent = nextQA["question"];
     allAnswerElems.innerHTML = ""; // Removes the old answer buttons
     var newAnswerElems = [
@@ -132,6 +126,10 @@ function PopulateQuestionAndAnswers() {
     newAnswerElems = FisherYatesShuffle(newAnswerElems);
     allAnswerElems.innerHTML = newAnswerElems.join("");
 }
+// Answer buttons call this and either increase score or decrease time.
+// Personal opinion, I don't like this, and think that correct answers 
+// should provide extra time, penalties just add stress to a timed 
+// learning activity.
 function SelectAnswerInQuiz(answerElem) {
     if (answerElem.classList.contains("right")) {
         currentScore += 1;
@@ -143,6 +141,9 @@ function SelectAnswerInQuiz(answerElem) {
     }
     PopulateQuestionAndAnswers();
 }
+
+let quizLoop = null;
+
 // Activates the timer
 function StartTheQuiz() {
     isQuizRunning = true;
@@ -150,24 +151,89 @@ function StartTheQuiz() {
     currentScore = 0;
     newScore = 0;
     playerName = "";
-
     // Quickly shuffle the array in place
-    shuffledQAs = FisherYatesShuffle(questionsAndAnswers);
-
+    var qnaCopy = questionsAndAnswers.slice();
+    shuffledQAs = FisherYatesShuffle(qnaCopy);
     PopulateQuestionAndAnswers()
-
-
-    var quizLoop = setInterval(function () {
+    // Every 100 ms, decrease a timer. When it hits 0, stop.
+    quizLoop = setInterval(function () {
         timeLeft -= 0.1;
         document.getElementById("time-left-current").textContent = timeLeft.toFixed(1);
-
         if (timeLeft <= 0 || !isQuizRunning) {
+            isQuizRunning = false;
+            console.log("AUGH, QUIZLOOP HAS BEEN SLAIN!!!")
             EndTheQuiz();
-            // TODO: GO TO HIGH SCORES SCREEN WITH SCORE ENTRY
             clearInterval(quizLoop);
+            quizLoop = null;
         }
     }, 100);
+}
+// Method that stops the quiz, called either by time <= 0 or running out of questions
+function EndTheQuiz() {
+    console.log("Ending the quiz with these DEBUG values: ")
+    console.log("  score: " + currentScore)
+    console.log("  timeLeft: " + timeLeft)
+    isQuizRunning = false;
+    newScore = currentScore;
+    currentScore = 0;
+    timeLeft = 0;
+    if (newScore > 0) {
+        NewHighScore();
+    }
+    else {
+        GoToTitle();
+    }
 }
 
 
 
+//                 //
+/* NEW HIGH SCORES */
+//                 //
+// Clears the scoreboard and displays saved scores.
+// NOTE: ASSUMES THE LIST IS ALREADY SORTED BY SCORE
+function RepopulateDisplayedHighScores() {
+    var topScoresListElem = document.getElementById("top-scores");
+    topScoresListElem.innerHTML = "";
+    var newHTML = "";
+    //console.log("Current scores: " + highScores);
+    if (highScores == null) {
+        return;
+    }
+    for (var i = 0; i < highScores.length; i++) {
+        element = "<li class='bubble black-on-white score'>" + highScores[i]["score"] + ": " + highScores[i]["name"] + "</li>";
+        newHTML += element;
+    }
+    topScoresListElem.innerHTML = newHTML;
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    newScoreModal.style.display = "none";
+}
+
+
+
+let highScores = JSON.parse(localStorage.getItem("highScores"));
+if (highScores == null) {
+    highScores = [];
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+
+}
+
+// Calls localstorage
+function SubmitHighScore() {
+    // IS THERE A NAME? REQUIRE A NAME
+    playerName = document.getElementById("new-score-name").value;
+    console.log("player name: " + playerName)
+    // CHECK CURRENT HIGH SCORE LIST
+    highScores = JSON.parse(localStorage.getItem("highScores"));
+    // TODO: Add submitted name and score to highScores variable
+    highScores.push({ "name": playerName, "score": newScore })
+    // TODO: Sort the list by high score
+
+    // Update the localStorage of highScores
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+    RepopulateDisplayedHighScores();
+    newScoreModal.style.display = "none";
+}

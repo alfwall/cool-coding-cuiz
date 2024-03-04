@@ -12,7 +12,7 @@
 
 <body>
   <main>
-    
+
     <div id="title-screen">
       <div class="flex-vertical">
         <div id="center-text-bubble" class="bubble black-on-white">Cool Coding Cuiz</div>
@@ -24,7 +24,7 @@
 
     <div id="question-screen" class="flex-vertical hidden">
       <div id="question-header">
-        <button id="stop-quiz-button" class="bubble black-on-white" onClick="EndTheQuiz()">STOP</button>
+        <button id="stop-quiz-button" class="bubble black-on-white" onClick="isQuizRunning=false;">STOP</button>
         <div id="time-left" class="bubble black-on-white">TIME: <span id="time-left-current">-1</span></div>
       </div>
       <div id="question-bubble" class="bubble black-on-white">QUESTION: UH OHHHH</div>
@@ -36,6 +36,7 @@
       </div>
     </div>
 
+    
     <div id="high-scores-screen" class="hidden">
       <div id="high-scores-header">
         <button id="title-screen-button" class="bubble black-on-white" onClick="GoToTitle()">TITLE</button>
@@ -44,7 +45,28 @@
       <ol id="top-scores" class="bubble black-on-white">
         <li class="bubble black-on-white score">DUMMY SCORE: 5</li>
       </ol>
+      <div id="new-score-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>SAVE YOUR SCORE</h2>
+          </div>
+          <div class="modal-body">
+            <div class="new-score-entry">
+              <span>YOUR SCORE: <span id="new-score-value"></span></span>
+              <label for="new-score-name-label">Your Name:</label>
+              <input type="text" id="new-score-name" name="new-score-name">
+              <button onclick="SubmitHighScore();">SUBMIT</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <h3>Modal Footer</h3>
+          </div>
+        </div>
+      </div>
     </div>
+
+
 
   </main>
 
