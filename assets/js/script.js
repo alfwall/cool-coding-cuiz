@@ -21,36 +21,22 @@ let playerName = "";
 let shuffledQAs; // Current shuffled array of the QA's
 
 // TODO: move this to a JSON object somewhere else
-const questionsAndAnswers = [
-    {
-        "question": "1111111111",
-        "answer": "YEAH",
-        "fake1": "NAH1",
-        "fake2": "NAH2",
-        "fake3": "NAH3"
-    },
-    {
-        "question": "22222222",
-        "answer": "YEAH",
-        "fake1": "NAH1",
-        "fake2": "NAH2",
-        "fake3": "NAH3"
-    },
-    {
-        "question": "333333333",
-        "answer": "YEAH",
-        "fake1": "NAH1",
-        "fake2": "NAH2",
-        "fake3": "NAH3"
-    },
-    {
-        "question": "444444444444",
-        "answer": "YEAH",
-        "fake1": "NAH1",
-        "fake2": "NAH2",
-        "fake3": "NAH3"
-    }
-];
+
+let questionsAndAnswers = [];
+fetch("./assets/js/data.json")
+    .then((res) => {
+        if (!res.ok) {
+            throw new Error
+                (`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then((data) => {
+        questionsAndAnswers = data["data"];
+        console.log(questionsAndAnswers);
+    })
+    .catch((error) =>
+        console.error("Unable to fetch data:", error));
 
 
 /* -------------- */
@@ -152,6 +138,7 @@ function SelectAnswerInQuiz(answerElem) {
         console.log("CORRECT! Score: " + currentScore);
     }
     else {
+        timeLeft -= 3.0;
         console.log("WRONGGGGG")
     }
     PopulateQuestionAndAnswers();
@@ -163,12 +150,12 @@ function StartTheQuiz() {
     currentScore = 0;
     newScore = 0;
     playerName = "";
-    
+
     // Quickly shuffle the array in place
     shuffledQAs = FisherYatesShuffle(questionsAndAnswers);
 
     PopulateQuestionAndAnswers()
-    
+
 
     var quizLoop = setInterval(function () {
         timeLeft -= 0.1;
