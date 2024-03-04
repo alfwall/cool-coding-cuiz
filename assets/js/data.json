@@ -1,32 +1,67 @@
 {
     "data": [
         {
-            "question": "1111111111",
-            "answer": "YEAH",
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
+            "question": "Commonly used data types do NOT include: ",
+            "answer": "alerts",
+            "fake1": "strings",
+            "fake2": "booleans",
+            "fake3": "numbers"
         },
         {
-            "question": "22222222",
-            "answer": "YEAH",
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
+            "question": "Arrays in JavaScript can be used to store _______",
+            "answer": "ALL of these",
+            "fake1": "numbers & strings",
+            "fake2": "other arrays",
+            "fake3": "booleans"
         },
         {
-            "question": "333333333",
-            "answer": "YEAH",
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
+            "question": "String values must be enclosed within _____ when being assigned to variables.",
+            "answer": "curly brackets",
+            "fake1": "commas",
+            "fake2": "quotes",
+            "fake3": "parenthesis"
         },
         {
-            "question": "444444444444",
-            "answer": "YEAH",
-            "fake1": "NAH1",
-            "fake2": "NAH2",
-            "fake3": "NAH3"
+            "question": "A very useful tool for debugging via printing to the console is: ",
+            "answer": "console.log()",
+            "fake1": "print()",
+            "fake2": "system.out.println()",
+            "fake3": "Screaming"
+        },
+        {
+            "question": "How do you make a number, var i=0, go up by 1?",
+            "answer": "ALL of these",
+            "fake1": "i += 1;",
+            "fake2": "i++;",
+            "fake3": "i = i + 1;"
+        },
+        {
+            "question": "For array with values [1, 2, 3, 4], what value is in index 2?",
+            "answer": "3",
+            "fake1": "1",
+            "fake2": "2",
+            "fake3": "4"
+        },
+        {
+            "question": "Comments in JavaScript look like: ",
+            "answer": "// comment or /* comment */ ",
+            "fake1": "# comment",
+            "fake2": "<!-- comment -->",
+            "fake3": "--[[ comment ]]--"
+        },
+        {
+            "question": "What does the method setInterval() do?",
+            "answer": "It loops a method repeatedly",
+            "fake1": "It changes the speed that time passes",
+            "fake2": "It posts to a form without reloading the page",
+            "fake3": "It sets a value used in complex calculations"
+        },
+        {
+            "question": "What is jQuery?",
+            "answer": "A library intended to simplify HTML DOM traversal and manipulation",
+            "fake1": "A CSS pre-processor with JS integrations",
+            "fake2": "A framework for hosting web servers",
+            "fake3": "JavaScript 2: The Sequel"
         }
     ]
 }

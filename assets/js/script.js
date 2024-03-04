@@ -146,7 +146,7 @@ function SelectAnswerInQuiz(answerElem) {
 // Activates the timer
 function StartTheQuiz() {
     isQuizRunning = true;
-    timeLeft = 30.0;
+    timeLeft = 60.0;
     currentScore = 0;
     newScore = 0;
     playerName = "";
