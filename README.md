@@ -6,7 +6,8 @@ Answer questions about JavaScript and win fabulous prizes! (The prize is knowled
 ## The Result
 [Click here!](https://alfwall.github.io/cool-coding-cuiz/)
 
-![Screenshot of the deployed project.](SCREENSHOT_OF_PROJECT_IN_ASSETS)
+![Screenshot of the deployed project mid-quiz.](./assets/images/mid-quiz.png)
+![Screenshot of the high scores in localStorage.](./assets/images/debug-storage.png)
 
 ## Credits
 - [Josh Comeau's CSS reset](https://www.joshwcomeau.com/css/custom-css-reset/)
