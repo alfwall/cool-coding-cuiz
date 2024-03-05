@@ -1,12 +1,3 @@
-
-let timeLeftElem = document.getElementById("time-left");
-let timeLeftCurrent = document.getElementById("time-left-current");
-let questionElem = document.getElementById("question-bubble");
-let allAnswerElems = document.getElementById("all-answer-options");
-
-let quizTimerLoop; // Reserves variable name for the timed quiz loop
-
-
 /* -------------- */
 /* HELPER METHODS */
 /* -------------- */
@@ -26,11 +17,15 @@ let titleScreenElem = document.getElementById("title-screen");
 let quizScreenElem = document.getElementById("question-screen");
 let scoresScreenElem = document.getElementById("high-scores-screen");
 var newScoreModal = document.getElementById("new-score-modal");
-var span = document.getElementsByClassName("close")[0];
+var closeableSpan = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+closeableSpan.onclick = function () {
+    newScoreModal.style.display = "none";
+}
 
 // Reveals the title screen and hides everything else
 function GoToTitle() {
-    console.log("GO TO TITLE!");
+    //console.log("GO TO TITLE!");
     Hide(quizScreenElem);
     newScoreModal.style.display = "none";
     Hide(scoresScreenElem);
@@ -38,7 +33,7 @@ function GoToTitle() {
 }
 // Reveals the Quiz and hides everything else
 function GoToQuiz() {
-    console.log("GO TO THE QUIZ!");
+    //console.log("GO TO THE QUIZ!");
     Hide(titleScreenElem);
     newScoreModal.style.display = "none";
     Hide(scoresScreenElem);
@@ -48,7 +43,7 @@ function GoToQuiz() {
 }
 // Reveals the scoreboard and hides everything else
 function GoToHighScores() {
-    console.log("CHECKING HIGH SCORES!");
+    //console.log("CHECKING HIGH SCORES!");
     Hide(quizScreenElem);
     Hide(titleScreenElem);
     RepopulateDisplayedHighScores();
@@ -57,7 +52,7 @@ function GoToHighScores() {
 }
 // Reveals the scoreboard AND a new score modal, hiding everything else
 function NewHighScore() {
-    console.log("NEW SCORE!");
+    //console.log("NEW SCORE!");
     Hide(quizScreenElem);
     Hide(titleScreenElem);
     RepopulateDisplayedHighScores();
@@ -70,13 +65,13 @@ function NewHighScore() {
 /*    THE QUIZ    */
 /* -------------- */
 let isQuizRunning = false;
-console.log("isQuizRunning = false IN INITIAL 'LET'")
 let timeLeft = 0.0;
 let currentScore = 0;
 let newScore = 0;
 let playerName = "";
 let shuffledQAs; // Current shuffled array of the QA's
 let questionsAndAnswers = [];
+// This fetch grabs the questions/answers from data.json
 fetch("./assets/js/data.json")
     .then((res) => {
         if (!res.ok) {
@@ -110,11 +105,12 @@ function FisherYatesShuffle(array) {
 function PopulateQuestionAndAnswers() {
     var nextQA = shuffledQAs.shift()
     if (nextQA === undefined) {
-        console.log("RAN OUTTA SHUFFLED QUESTIONS!!")
+        //console.log("RAN OUTTA SHUFFLED QUESTIONS!!")
         isQuizRunning = false;
         return;
     }
-    questionElem.textContent = nextQA["question"];
+    document.getElementById("question-bubble").textContent = nextQA["question"];
+    var allAnswerElems = document.getElementById("all-answer-options");
     allAnswerElems.innerHTML = ""; // Removes the old answer buttons
     var newAnswerElems = [
         "<button class='bubble black-on-blue answer-option right' onclick='SelectAnswerInQuiz(this);'>" + nextQA["answer"] + "</button>",
@@ -133,15 +129,16 @@ function PopulateQuestionAndAnswers() {
 function SelectAnswerInQuiz(answerElem) {
     if (answerElem.classList.contains("right")) {
         currentScore += 1;
-        console.log("CORRECT! Score: " + currentScore);
+        //console.log("CORRECT! Score: " + currentScore);
     }
     else {
         timeLeft -= 3.0;
-        console.log("WRONGGGGG")
+        //console.log("WRONGGGGG")
     }
     PopulateQuestionAndAnswers();
 }
 
+// Interval timer variable.
 let quizLoop = null;
 
 // Activates the timer
@@ -161,7 +158,7 @@ function StartTheQuiz() {
         document.getElementById("time-left-current").textContent = timeLeft.toFixed(1);
         if (timeLeft <= 0 || !isQuizRunning) {
             isQuizRunning = false;
-            console.log("AUGH, QUIZLOOP HAS BEEN SLAIN!!!")
+            //console.log("AUGH, QUIZLOOP HAS BEEN SLAIN!!!")
             EndTheQuiz();
             clearInterval(quizLoop);
             quizLoop = null;
@@ -170,9 +167,9 @@ function StartTheQuiz() {
 }
 // Method that stops the quiz, called either by time <= 0 or running out of questions
 function EndTheQuiz() {
-    console.log("Ending the quiz with these DEBUG values: ")
-    console.log("  score: " + currentScore)
-    console.log("  timeLeft: " + timeLeft)
+    //console.log("Ending the quiz with these DEBUG values: ")
+    //console.log("  score: " + currentScore)
+    //console.log("  timeLeft: " + timeLeft)
     isQuizRunning = false;
     newScore = currentScore;
     currentScore = 0;
@@ -185,11 +182,16 @@ function EndTheQuiz() {
     }
 }
 
-
-
-//                 //
+// ----------------//
 /* NEW HIGH SCORES */
-//                 //
+// ----------------//
+// Current high scores from localStorage are saved to this variable
+let highScores = JSON.parse(localStorage.getItem("highScores"));
+if (highScores == null) {
+    highScores = [];
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+
+}
 // Clears the scoreboard and displays saved scores.
 // NOTE: ASSUMES THE LIST IS ALREADY SORTED BY SCORE
 function RepopulateDisplayedHighScores() {
@@ -208,30 +210,16 @@ function RepopulateDisplayedHighScores() {
     topScoresListElem.innerHTML = newHTML;
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    newScoreModal.style.display = "none";
-}
-
-
-
-let highScores = JSON.parse(localStorage.getItem("highScores"));
-if (highScores == null) {
-    highScores = [];
-    localStorage.setItem("highScores", JSON.stringify(highScores));
-
-}
-
-// Calls localstorage
+// Updates localstorage
 function SubmitHighScore() {
     // IS THERE A NAME? REQUIRE A NAME
     playerName = document.getElementById("new-score-name").value;
-    console.log("player name: " + playerName)
+    //console.log("player name: " + playerName)
     // CHECK CURRENT HIGH SCORE LIST
     highScores = JSON.parse(localStorage.getItem("highScores"));
     // Add submitted name and score to highScores variable
     highScores.push({ "name": playerName, "score": newScore })
-    // TODO: Sort the list by high score
+    // Sort the list by high score
     function compareByScore(a, b) {
         return b.score - a.score;
     }

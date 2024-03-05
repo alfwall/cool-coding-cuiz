@@ -12,7 +12,7 @@
 
 <body>
   <main>
-
+    <!-- Title, Start button, and High Scores button -->
     <div id="title-screen">
       <div class="flex-vertical">
         <div id="center-text-bubble" class="bubble black-on-white">Cool Coding Cuiz</div>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-
+    <!-- Quiz answer section with a timer -->
     <div id="question-screen" class="flex-vertical hidden">
       <div id="question-header">
         <button id="stop-quiz-button" class="bubble black-on-white" onClick="isQuizRunning=false;">STOP</button>
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    
+    <!-- Lists scores saved to localStorage -->
     <div id="high-scores-screen" class="hidden">
       <div id="high-scores-header">
         <button id="title-screen-button" class="bubble black-on-white" onClick="GoToTitle()">TITLE</button>
@@ -45,10 +45,11 @@
       <ol id="top-scores" class="bubble black-on-white">
         <li class="bubble black-on-white score">DUMMY SCORE: 5</li>
       </ol>
+      <!-- A modal for accepting new scores -->
       <div id="new-score-modal">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="close">&times;</span>
+            <span class="close" onclick="newScoreModal.style.display='none';">&times;</span>
             <h2>SAVE YOUR SCORE</h2>
           </div>
           <div class="modal-body">

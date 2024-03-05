@@ -19,10 +19,10 @@ Answer questions about JavaScript and win fabulous prizes! (The prize is knowled
     - [x] Make a set of Q/A objects (Question, Option1, Option2, Option3, Option4, CorrectOptionNumber)
     - [x] Start a timer, display its current time.
     - [x] If incorrect answer, subtract from time
-    - [ ] If time >= 0, STOP and display score.
-- [ ] Make a High Scores display
-    - [ ] If arriving from finished quiz, offer to collect name for score
-    - [ ] Include button to Start Again!
+    - [x] If time >= 0, STOP and display score.
+- [x] Make a High Scores display
+    - [x] If arriving from finished quiz, offer to collect name for score
+    - [x] Include button to Start Again!
 
 
 
