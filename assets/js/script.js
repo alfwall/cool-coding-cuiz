@@ -190,7 +190,6 @@ let highScores = JSON.parse(localStorage.getItem("highScores"));
 if (highScores == null) {
     highScores = [];
     localStorage.setItem("highScores", JSON.stringify(highScores));
-
 }
 // Clears the scoreboard and displays saved scores.
 // NOTE: ASSUMES THE LIST IS ALREADY SORTED BY SCORE
@@ -217,6 +216,10 @@ function SubmitHighScore() {
     //console.log("player name: " + playerName)
     // CHECK CURRENT HIGH SCORE LIST
     highScores = JSON.parse(localStorage.getItem("highScores"));
+    if (highScores == null) {
+        highScores = [];
+        localStorage.setItem("highScores", JSON.stringify(highScores));
+    }
     // Add submitted name and score to highScores variable
     highScores.push({ "name": playerName, "score": newScore })
     // Sort the list by high score

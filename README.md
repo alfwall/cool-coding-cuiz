@@ -4,7 +4,7 @@
 Answer questions about JavaScript and win fabulous prizes! (The prize is knowledge and a spot on a scoreboard.)
 
 ## The Result
-[Click here!](DEPLOYED_URL_HERE)
+[Click here!](https://alfwall.github.io/cool-coding-cuiz/)
 
 ![Screenshot of the deployed project.](SCREENSHOT_OF_PROJECT_IN_ASSETS)
 
